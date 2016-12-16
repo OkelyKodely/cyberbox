@@ -29,6 +29,9 @@ namespace Cyberbox
         Texture2D circle, brick, green, yellow, blue, downmover, rightmover, leftmover;
         Circle player;
 
+        // At the top of your class:
+        Texture2D pixel;
+        
         public class LeftMover : Shape
         {
         }
@@ -75,10 +78,10 @@ namespace Cyberbox
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 450;
-            graphics.PreferredBackBufferHeight = 300;
+            graphics.PreferredBackBufferWidth = ((int)(450 * 1.3));
+            graphics.PreferredBackBufferHeight = ((int)(300 * 1.3));
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -100,6 +103,10 @@ namespace Cyberbox
         /// </summary>
         protected override void LoadContent()
         {
+            // Somewhere in your LoadContent() method:
+            pixel = new Texture2D(this.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            pixel.SetData(new[] { Color.White }); // so that we can draw whatever color we want on top of it
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -141,8 +148,8 @@ namespace Cyberbox
             player.prevY = 9;
             player.X = 7;
             player.Y = 9;
-            player.vector.X = player.X * 30;
-            player.vector.Y = player.Y * 30;
+            player.vector.X = player.X *((int)(30*1.3));
+            player.vector.Y = player.Y *((int)(30*1.3));
 
             AddBrick(4, 0);
             AddBrick(10, 0);
@@ -257,7 +264,7 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y * 30;
+            player.vector.Y = player.Y *((int)(30*1.3));
         }
 
         public void Level3()
@@ -339,7 +346,7 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y * 30;
+            player.vector.Y = player.Y *((int)(30*1.3));
         }
 
         public void Level4()
@@ -425,62 +432,62 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y * 30;
+            player.vector.Y = player.Y *((int)(30*1.3));
         }
 
         private void AddLM(int x, int y)
         {
             LeftMover lm = new LeftMover();
-            lm.vector.X = (lm.X = x) * 30;
-            lm.vector.Y = (lm.Y = y) * 30;
+            lm.vector.X = (lm.X = x) *((int)(30*1.3));
+            lm.vector.Y = (lm.Y = y) *((int)(30*1.3));
             leftmovers.Add(lm);
         }
 
         private void AddRM(int x, int y)
         {
             RightMover rm = new RightMover();
-            rm.vector.X = (rm.X = x) * 30;
-            rm.vector.Y = (rm.Y = y) * 30;
+            rm.vector.X = (rm.X = x) *((int)(30*1.3));
+            rm.vector.Y = (rm.Y = y) *((int)(30*1.3));
             rightmovers.Add(rm);
         }
 
         private void AddDM(int x, int y)
         {
             DownMover dm = new DownMover();
-            dm.vector.X = (dm.X = x) * 30;
-            dm.vector.Y = (dm.Y = y) * 30;
+            dm.vector.X = (dm.X = x) *((int)(30*1.3));
+            dm.vector.Y = (dm.Y = y) *((int)(30*1.3));
             downmovers.Add(dm);
         }
 
         private void AddBrick(int x, int y)
         {
             Brick brick = new Brick();
-            brick.vector.X = (brick.X = x) * 30;
-            brick.vector.Y = (brick.Y = y) * 30;
+            brick.vector.X = (brick.X = x) *((int)(30*1.3));
+            brick.vector.Y = (brick.Y = y) *((int)(30*1.3));
             bricks.Add(brick);
         }
 
         private void AddGreen(int x, int y)
         {
             Green green = new Green();
-            green.vector.X = (green.X = x) * 30;
-            green.vector.Y = (green.Y = y) * 30;
+            green.vector.X = (green.X = x) *((int)(30*1.3));
+            green.vector.Y = (green.Y = y) *((int)(30*1.3));
             greens.Add(green);
         }
 
         private void AddYellow(int x, int y)
         {
             Yellow yellow = new Yellow();
-            yellow.vector.X = (yellow.X = x) * 30;
-            yellow.vector.Y = (yellow.Y = y) * 30;
+            yellow.vector.X = (yellow.X = x) *((int)(30*1.3));
+            yellow.vector.Y = (yellow.Y = y) *((int)(30*1.3));
             yellows.Add(yellow);
         }
 
         private void AddBlue(int x, int y)
         {
             Blue blue = new Blue();
-            blue.vector.X = (blue.X = x) * 30;
-            blue.vector.Y = (blue.Y = y) * 30;
+            blue.vector.X = (blue.X = x) *((int)(30*1.3));
+            blue.vector.Y = (blue.Y = y) *((int)(30*1.3));
             blues.Add(blue);
         }
 
@@ -556,7 +563,7 @@ namespace Cyberbox
                         {
                             if(greens[i].Y > 0)
                                 greens[i].Y -= 1;
-                            greens[i].vector.Y = greens[i].Y * 30;
+                            greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -564,7 +571,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y++;
-                            player.vector.Y += 30;
+                            player.vector.Y += ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -578,7 +585,7 @@ namespace Cyberbox
                         {
                             if(yellows[i].Y > 0)
                                 yellows[i].Y -= 1;
-                            yellows[i].vector.Y = yellows[i].Y * 30;
+                            yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -586,7 +593,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y++;
-                            player.vector.Y += 30;
+                            player.vector.Y += ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -609,7 +616,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y--;
-                            player.vector.Y -= 30;
+                            player.vector.Y -= ((int)(30 * 1.3));
                         }
                     }
                 }
@@ -635,7 +642,7 @@ namespace Cyberbox
                         {
                             if(greens[i].Y < 9)
                                 greens[i].Y += 1;
-                            greens[i].vector.Y = greens[i].Y * 30;
+                            greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -643,7 +650,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y--;
-                            player.vector.Y -= 30;
+                            player.vector.Y -= ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -657,7 +664,7 @@ namespace Cyberbox
                         {
                             if(yellows[i].Y < 9)
                                 yellows[i].Y += 1;
-                            yellows[i].vector.Y = yellows[i].Y * 30;
+                            yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -665,7 +672,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y--;
-                            player.vector.Y -= 30;
+                            player.vector.Y -= ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -688,7 +695,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.Y++;
-                            player.vector.Y += 30;
+                            player.vector.Y += ((int)(30 * 1.3));
                         }
                     }
                 }
@@ -714,7 +721,7 @@ namespace Cyberbox
                         {
                             if(greens[i].X > 0)
                                 greens[i].X -= 1;
-                            greens[i].vector.X = greens[i].X * 30;
+                            greens[i].vector.X = greens[i].X *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -722,7 +729,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X++;
-                            player.vector.X += 30;
+                            player.vector.X += ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -736,7 +743,7 @@ namespace Cyberbox
                         {
                             if(blues[i].X > 0)
                                 blues[i].X -= 1;
-                            blues[i].vector.X = blues[i].X * 30;
+                            blues[i].vector.X = blues[i].X *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -744,7 +751,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X++;
-                            player.vector.X += 30;
+                            player.vector.X += ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -767,7 +774,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X--;
-                            player.vector.X -= 30;
+                            player.vector.X -= ((int)(30 * 1.3));
                         }
                     }
                 }
@@ -777,7 +784,7 @@ namespace Cyberbox
                 if (player.X == rightmovers[0].X && player.Y == rightmovers[0].Y)
                 {
                     player.X--;
-                    player.vector.X = player.X * 30;
+                    player.vector.X = player.X *((int)(30*1.3));
                 }        
                 bool ispushe = false;
                 bool stuc = false;
@@ -792,7 +799,7 @@ namespace Cyberbox
                             rightmovers[0].X -= 1;
                         }
                     }
-                    rightmovers[0].vector.X = rightmovers[0].X * 30;
+                    rightmovers[0].vector.X = rightmovers[0].X *((int)(30*1.3));
                     must = true;
                 }
             }
@@ -811,7 +818,7 @@ namespace Cyberbox
                             downmovers[0].Y -= 1;
                         }
                     }
-                    downmovers[0].vector.Y = downmovers[0].Y * 30;
+                    downmovers[0].vector.Y = downmovers[0].Y *((int)(30*1.3));
                     must = true;
                 }
                 ispushe = pushLM(player, leftmovers[0], -1, 0);
@@ -825,7 +832,7 @@ namespace Cyberbox
                             leftmovers[0].X += 1;
                         }
                     }
-                    leftmovers[0].vector.X = leftmovers[0].X * 30;
+                    leftmovers[0].vector.X = leftmovers[0].X *((int)(30*1.3));
                     must = true;
                 }
                 ispushe = pushLM(player, leftmovers[1], -1, 0);
@@ -839,7 +846,7 @@ namespace Cyberbox
                             leftmovers[1].X += 1;
                         }
                     }
-                    leftmovers[1].vector.X = leftmovers[1].X * 30;
+                    leftmovers[1].vector.X = leftmovers[1].X *((int)(30*1.3));
                     must = true;
                 }
                 ispushe = pushLM(player, leftmovers[2], -1, 0);
@@ -853,7 +860,7 @@ namespace Cyberbox
                             leftmovers[2].X += 1;
                         }
                     }
-                    leftmovers[2].vector.X = leftmovers[2].X * 30;
+                    leftmovers[2].vector.X = leftmovers[2].X *((int)(30*1.3));
                     must = true;
                 }
             }
@@ -878,7 +885,7 @@ namespace Cyberbox
                         {
                             if(greens[i].X < 14)
                                 greens[i].X += 1;
-                            greens[i].vector.X = greens[i].X * 30;
+                            greens[i].vector.X = greens[i].X *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -886,7 +893,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X--;
-                            player.vector.X -= 30;
+                            player.vector.X -= ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -900,7 +907,7 @@ namespace Cyberbox
                         {
                             if(blues[i].X < 14)
                                 blues[i].X += 1;
-                            blues[i].vector.X = blues[i].X * 30;
+                            blues[i].vector.X = blues[i].X *((int)(30*1.3));
                             must = true;
                         }
                         else
@@ -908,7 +915,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X--;
-                            player.vector.X -= 30;
+                            player.vector.X -= ((int)(30 * 1.3));
                             stuck = true;
                         }
                     }
@@ -931,7 +938,7 @@ namespace Cyberbox
                             player.prevX = player.X;
                             player.prevY = player.Y;
                             player.X++;
-                            player.vector.X += 30;
+                            player.vector.X += ((int)(30 * 1.3));
                         }
                     }
                 }
@@ -943,8 +950,8 @@ namespace Cyberbox
                 {
                     player.X = player.prevX;
                     player.Y = player.prevY;
-                    player.vector.X = player.X * 30;
-                    player.vector.Y = player.Y * 30;
+                    player.vector.X = player.X *((int)(30*1.3));
+                    player.vector.Y = player.Y *((int)(30*1.3));
                 }
             }
 
@@ -1043,8 +1050,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X * 30;
-                        greens[i].vector.Y = greens[i].Y * 30;
+                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1060,7 +1067,7 @@ namespace Cyberbox
                             blues[i].X += x;
                         else
                             ispushed = false;
-                        blues[i].vector.X = blues[i].X * 30;
+                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1146,8 +1153,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X * 30;
-                        greens[i].vector.Y = greens[i].Y * 30;
+                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1163,7 +1170,7 @@ namespace Cyberbox
                             yellows[i].Y += y;
                         else
                             ispushed = false;
-                        yellows[i].vector.Y = yellows[i].Y * 30;
+                        yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1249,8 +1256,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X * 30;
-                        greens[i].vector.Y = greens[i].Y * 30;
+                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1266,7 +1273,7 @@ namespace Cyberbox
                             blues[i].X += x;
                         else
                             ispushed = false;
-                        blues[i].vector.X = blues[i].X * 30;
+                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1325,8 +1332,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X * 30;
-                        greens[i].vector.Y = greens[i].Y * 30;
+                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1342,7 +1349,7 @@ namespace Cyberbox
                             yellows[i].Y += y;
                         else
                             ispushed = false;
-                        yellows[i].vector.Y = yellows[i].Y * 30;
+                        yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1358,7 +1365,7 @@ namespace Cyberbox
                             blues[i].X += x;
                         else
                             ispushed = false;
-                        blues[i].vector.X = blues[i].X * 30;
+                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1415,7 +1422,7 @@ namespace Cyberbox
                             yellows[i].Y += y;
                         else
                             ispushed = false;
-                        yellows[i].vector.Y = yellows[i].Y * 30;
+                        yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1431,7 +1438,7 @@ namespace Cyberbox
                             greens[i].Y += y;
                         else
                             ispushed = false;
-                        greens[i].vector.Y = greens[i].Y * 30;
+                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1488,7 +1495,7 @@ namespace Cyberbox
                             blues[i].X += x;
                         else
                             ispushed = false;
-                        blues[i].vector.X = blues[i].X * 30;
+                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1504,7 +1511,7 @@ namespace Cyberbox
                             greens[i].X += x;
                         else
                             ispushed = false;
-                        greens[i].vector.X = greens[i].X * 30;
+                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
                         return ispushed;
                     }
                 }
@@ -1522,36 +1529,43 @@ namespace Cyberbox
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(green, new Vector2(7*30+1, -30+4), Color.White);
+            // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
+            Rectangle titleSafeRectangle = new Rectangle(50, 60, 586, 391);
+            // Call our method (also defined in this blog-post)
+            DrawBorder(titleSafeRectangle, 1, Color.White);
+            // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
+            Rectangle exit = new Rectangle(324, 60, 39, 1);
+            // Call our method (also defined in this blog-post)
+            DrawBorder(exit, 1, Color.Black);
             for (int i = 0; i < bricks.Count; i++)
             {
-                spriteBatch.Draw(brick, bricks[i].vector, Color.White);
+                spriteBatch.Draw(brick, bricks[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < greens.Count; i++)
             {
-                spriteBatch.Draw(green, greens[i].vector, Color.White);
+                spriteBatch.Draw(green, greens[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < blues.Count; i++)
             {
-                spriteBatch.Draw(blue, blues[i].vector, Color.White);
+                spriteBatch.Draw(blue, blues[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < yellows.Count; i++)
             {
-                spriteBatch.Draw(yellow, yellows[i].vector, Color.White);
+                spriteBatch.Draw(yellow, yellows[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < downmovers.Count; i++)
             {
-                spriteBatch.Draw(downmover, downmovers[i].vector, Color.White);
+                spriteBatch.Draw(downmover, downmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < rightmovers.Count; i++)
             {
-                spriteBatch.Draw(rightmover, rightmovers[i].vector, Color.White);
+                spriteBatch.Draw(rightmover, rightmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < leftmovers.Count; i++)
             {
-                spriteBatch.Draw(leftmover, leftmovers[i].vector, Color.White);
+                spriteBatch.Draw(leftmover, leftmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
-            spriteBatch.Draw(circle, player.vector, Color.White);
+            spriteBatch.Draw(circle, player.vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             if (drawwin)
             {
                 spriteBatch.DrawString(spriteFont, "You win!", new Vector2(0, 0), Color.White);
@@ -1563,6 +1577,34 @@ namespace Cyberbox
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Will draw a border (hollow rectangle) of the given 'thicknessOfBorder' (in pixels)
+        /// of the specified color.
+        ///
+        /// By Sean Colombo, from http://bluelinegamestudios.com/blog
+        /// </summary>
+        /// <param name="rectangleToDraw"></param>
+        /// <param name="thicknessOfBorder"></param>
+        private void DrawBorder(Rectangle rectangleToDraw, int thicknessOfBorder, Color borderColor)
+        {
+            // Draw top line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
+
+            // Draw left line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
+
+            // Draw right line
+            spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
+                                            rectangleToDraw.Y,
+                                            thicknessOfBorder,
+                                            rectangleToDraw.Height), borderColor);
+            // Draw bottom line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
+                                            rectangleToDraw.Y + rectangleToDraw.Height - thicknessOfBorder,
+                                            rectangleToDraw.Width,
+                                            thicknessOfBorder), borderColor);
         }
     }
 }
