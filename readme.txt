@@ -1,1 +1,1 @@
-* *  This game features 4 demo levels of Doug Beeferman's original Cyberbox I.  Enjoy~ D.C.
+* *  This game features the first 10 levels of the original Cyberbox by Doug Beeferman.  Please enjoy! Daniel Cho
