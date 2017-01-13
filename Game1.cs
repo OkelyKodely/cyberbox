@@ -12,8 +12,13 @@ namespace Cyberbox
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        GifAnimation.GifAnimation background, brick, green, yellow, blue;
+        Boolean cheat = true;
+        String[] rooms = new String[17];
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        List<Block1> block1s = new List<Block1>();
+        List<Block2> block2s = new List<Block2>();
         List<Brick> bricks = new List<Brick>();
         List<Green> greens = new List<Green>();
         List<Yellow> yellows = new List<Yellow>();
@@ -26,17 +31,17 @@ namespace Cyberbox
         List<DownZapp> downzapps = new List<DownZapp>();
         List<LeftZapp> leftzapps = new List<LeftZapp>();
         List<RightZapp> rightzapps = new List<RightZapp>();
-        SpriteFont spriteFont;
-        Texture2D circle, brick, green, yellow, blue, downmover, upmover, rightmover, leftmover;
+        SpriteFont spriteFont, spriteFont2, spriteFont3, cyberFont;
+        Texture2D circle, downmover, upmover, rightmover, leftmover, block1, block2;
         Circle player;
         Texture2D pixel, upzapp, downzapp, leftzapp, rightzapp;
         KeyboardState _currentKeyboardState;
         KeyboardState _previousKeyboardState;
         Rectangle rect;
-        Background background;
         int currentLevel = 0;
         bool drawwin = false;
         bool loadlevel = true;
+        int attempts = 4;
 
         public class LeftMover : Shape
         {
@@ -82,6 +87,14 @@ namespace Cyberbox
         {
         }
 
+        public class Block1 : Shape
+        {
+        }
+
+        public class Block2 : Shape
+        {
+        }
+
         public class Shape
         {
             public int X, Y;
@@ -104,10 +117,11 @@ namespace Cyberbox
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = ((int)(450 * 1.3)) + 100;
-            graphics.PreferredBackBufferHeight = ((int)(300 * 1.3)) + 100;
+            graphics.PreferredBackBufferWidth = 615;
+            graphics.PreferredBackBufferHeight = 490;
+            graphics.ToggleFullScreen();
+            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
-            graphics.IsFullScreen = false;
         }
 
         public class Background : DrawableGameComponent
@@ -166,16 +180,19 @@ namespace Cyberbox
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            rect = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            background = new Background(rect, Color.Black, this, spriteBatch);
-            background.LoadContent();
+            //rect = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            //background = new Background(rect, Color.Black, this, spriteBatch);
+            //background.LoadContent();
 
             // TODO: use this.Content to load your game content here
+            background = Content.Load<GifAnimation.GifAnimation>("bk");
             circle = Content.Load<Texture2D>("circle");
-            brick = Content.Load<Texture2D>("brick");
-            green = Content.Load<Texture2D>("green");
-            yellow = Content.Load<Texture2D>("yellow");
-            blue = Content.Load<Texture2D>("blue");
+            block1 = Content.Load<Texture2D>("block1");
+            block2 = Content.Load<Texture2D>("block2");
+            brick = Content.Load<GifAnimation.GifAnimation>("brick");
+            green = Content.Load<GifAnimation.GifAnimation>("green");
+            yellow = Content.Load<GifAnimation.GifAnimation>("yellow");
+            blue = Content.Load<GifAnimation.GifAnimation>("blue");
             rightmover = Content.Load<Texture2D>("rightmover");
             leftmover = Content.Load<Texture2D>("leftmover");
             downmover = Content.Load<Texture2D>("downmover");
@@ -185,6 +202,27 @@ namespace Cyberbox
             leftzapp = Content.Load<Texture2D>("leftzapp");
             rightzapp = Content.Load<Texture2D>("rightzapp");
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
+            cyberFont = Content.Load<SpriteFont>("SpriteFont2");
+            spriteFont2 = Content.Load<SpriteFont>("SpriteFont3");
+            spriteFont3 = Content.Load<SpriteFont>("SpriteFont4");
+
+            rooms[0] = "The Lobby";
+            rooms[1] = "No Problem";
+            rooms[2] = "Think Ahead";
+            rooms[3] = "Choices, Choices";
+            rooms[4] = "You Can Do It";
+            rooms[5] = "Chain Reaction";
+            rooms[6] = "Your Guess";
+            rooms[7] = "Go With The Flow";
+            rooms[8] = "Don't Get Zapped!";
+            rooms[9] = "Prioritize!";
+            rooms[10] = "Fifty Fifty...";
+            rooms[11] = "Watch Your Step!";
+            rooms[12] = "Move It Or Lose It";
+            rooms[13] = "Zapperland";
+            rooms[14] = "Logistics...";
+            rooms[15] = "Last But Not Least";
+            rooms[16] = "...Almost!";
         }
 
         public void Level1()
@@ -981,6 +1019,614 @@ namespace Cyberbox
             player.vector.Y = player.Y * ((int)(30 * 1.3));
         }
 
+        public void Level11()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+
+            AddBrick(4, 0);
+            AddBrick(5, 0);
+            AddBrick(6, 0);
+            AddDM(7, 0);
+            AddBrick(8, 0);
+            AddBrick(9, 0);
+            AddBrick(10, 0);
+            AddBrick(11, 0);
+            AddBrick(3, 1);
+            AddBlue(6, 1);
+            AddBlue(7, 1);
+            AddBlue(8, 1);
+            AddGreen(9, 1);
+            AddBlue(10, 1);
+            AddBrick(12, 1);
+            AddBrick(2, 2);
+            AddGreen(4, 2);
+            AddBlue(5, 2);
+            AddBlue(6, 2);
+            AddBlue(7, 2);
+            AddBlue(8, 2);
+            AddBrick(13, 2);
+            AddBrick(2, 3);
+            AddBlue(5, 3);
+            AddBlue(6, 3);
+            AddBlue(7, 3);
+            AddGreen(8, 3);
+            AddBlue(9, 3);
+            AddBlue(10, 3);
+            AddBrick(13, 3);
+            AddBrick(2, 4);
+            AddBlue(4, 4);
+            AddGreen(5, 4);
+            AddBlue(6, 4);
+            AddBlue(7, 4);
+            AddGreen(8, 4);
+            AddBlue(9, 4);
+            AddBlue(10, 4);
+            AddBrick(13, 4);
+            AddBrick(2, 5);
+            AddBlue(5, 5);
+            AddBlue(6, 5);
+            AddBlue(7, 5);
+            AddGreen(8, 5);
+            AddBlue(9, 5);
+            AddBlue(10, 5);
+            AddBrick(13, 5);
+            AddBrick(3, 6);
+            AddBlue(7, 6);
+            AddBrick(12, 6);
+            AddBrick(6, 7);
+            AddBrick(8, 7);
+            AddBrick(5, 8);
+            AddDM(6, 8);
+            AddBrick(7, 8);
+            AddDM(8, 8);
+            AddBrick(9, 8);
+            AddBlue(5, 9);
+            AddBlue(6, 9);
+            AddBlue(8, 9);
+            AddBlue(9, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level12()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+
+            AddBrick(2, 0);
+            AddDM(3, 0);
+            AddBlock1(5, 0);
+            AddBlue(6, 0);
+            AddBlue(7, 0);
+            AddDM(10, 0);
+            AddBlue(3, 1);
+            AddBrick(7, 1);
+            AddYellow(10, 1);
+            AddBrick(0, 2);
+            AddUZ(1, 2);
+            AddBrick(2, 2);
+            AddYellow(3, 2);
+            AddBrick(8, 2);
+            AddBrick(9, 2);
+            AddGreen(10, 2);
+            AddBrick(11, 2);
+            AddYellow(3, 3);
+            AddBlue(4, 3);
+            AddBlue(5, 3);
+            AddBlue(6, 3);
+            AddBlue(7, 3);
+            AddBlue(8, 3);
+            AddBlue(9, 3);
+            AddLM(10, 3);
+            AddBrick(12, 3);
+            AddLZ(2, 4);
+            AddGreen(5, 4);
+            AddBrick(7, 4);
+            AddDZ(8, 4);
+            AddBrick(9, 4);
+            AddBrick(10, 4);
+            AddBrick(11, 4);
+            AddLZ(2, 5);
+            AddGreen(5, 5);
+            AddGreen(8, 5);
+            AddBlue(11, 5);
+            AddBlue(12, 5);
+            AddLZ(2, 6);
+            AddGreen(5, 6);
+            AddGreen(8, 6);
+            AddBrick(10, 6);
+            AddBrick(11, 6);
+            AddUM(12, 6);
+            AddUZ(13, 6);
+            AddUZ(14, 6);
+            AddBrick(3, 7);
+            AddBrick(4, 7);
+            AddBrick(6, 7);
+            AddBrick(7, 7);
+            AddBrick(8, 7);
+            AddBrick(10, 7);
+            AddBlock1(5, 8);
+            AddBlue(7, 8);
+            AddBlock1(9, 8);
+            AddBlock1(5, 9);
+            AddBlock1(9, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level13()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+            block1s.Clear();
+
+            AddBlock1(6, 0);
+            AddBlock1(7, 0);
+            AddBlock1(8, 0);
+            AddBrick(8, 1);
+            AddBrick(9, 1);
+            AddBrick(10, 1);
+            AddBrick(11, 1);
+            AddBrick(5, 2);
+            AddBrick(6, 2);
+            AddBrick(7, 2);
+            AddLZ(11, 2);
+            AddBrick(0, 3);
+            AddBrick(1, 3);
+            AddBrick(2, 3);
+            AddBrick(3, 3);
+            AddBrick(4, 3);
+            AddBrick(10, 3);
+            AddBrick(11, 3);
+            AddBrick(6, 4);
+            AddBrick(7, 4);
+            AddBrick(8, 4);
+            AddBrick(9, 4);
+            AddBrick(12, 4);
+            AddBrick(14, 4);
+            AddBrick(2, 5);
+            AddBlue(7, 5);
+            AddLZ(12, 5);
+            AddBrick(0, 6);
+            AddBrick(2, 6);
+            AddBrick(3, 6);
+            AddBrick(4, 6);
+            AddBrick(5, 6);
+            AddBrick(6, 6);
+            AddBrick(7, 6);
+            AddBrick(9, 6);
+            AddBrick(11, 6);
+            AddGreen(5, 7);
+            AddLZ(7, 7);
+            AddBrick(9, 7);
+            AddBrick(11, 7);
+            AddBrick(6, 8);
+            AddBrick(7, 8);
+            AddBlue(13, 8);
+            AddBrick(8, 9);
+            AddBrick(11, 9);
+            AddBrick(12, 9);
+            AddUM(13, 9);
+            AddBrick(14, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level14()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+            block1s.Clear();
+
+            AddRZ(2, 0);
+            AddRZ(4, 0);
+            AddRZ(6, 0);
+            AddRZ(8, 0);
+            AddLZ(10, 0);
+            AddLZ(12, 0);
+            AddRZ(1, 1);
+            AddRZ(3, 1);
+            AddLZ(5, 1);
+            AddLZ(7, 1);
+            AddLZ(9, 1);
+            AddRZ(11, 1);
+            AddLZ(13, 1);
+            AddUZ(0, 2);
+            AddDZ(2, 2);
+            AddUZ(4, 2);
+            AddUZ(6, 2);
+            AddDZ(8, 2);
+            AddUZ(10, 2);
+            AddDZ(12, 2);
+            AddUZ(14, 2);
+            AddLZ(1, 3);
+            AddLZ(3, 3);
+            AddRZ(5, 3);
+            AddLZ(7, 3);
+            AddDZ(9, 3);
+            AddLZ(11, 3);
+            AddLZ(13, 3);
+            AddDZ(0, 4);
+            AddDZ(2, 4);
+            AddUZ(4, 4);
+            AddUZ(6, 4);
+            AddDZ(8, 4);
+            AddLZ(10, 4);
+            AddRZ(12, 4);
+            AddUZ(14, 4);
+            AddRZ(1, 5);
+            AddLZ(3, 5);
+            AddLZ(5, 5);
+            AddLZ(7, 5);
+            AddRZ(9, 5);
+            AddUZ(11, 5);
+            AddRZ(13, 5);
+            AddUZ(0, 6);
+            AddDZ(2, 6);
+            AddDZ(4, 6);
+            AddDZ(6, 6);
+            AddDZ(8, 6);
+            AddUZ(10, 6);
+            AddUZ(12, 6);
+            AddDZ(14, 6);
+            AddLZ(1, 7);
+            AddRZ(3, 7);
+            AddRZ(5, 7);
+            AddLZ(7, 7);
+            AddRZ(9, 7);
+            AddRZ(11, 7);
+            AddRZ(13, 7);
+            AddDZ(0, 8);
+            AddUZ(2, 8);
+            AddUZ(4, 8);
+            AddUZ(6, 8);
+            AddUZ(8, 8);
+            AddUZ(10, 8);
+            AddDZ(12, 8);
+            AddUZ(14, 8);
+            AddRZ(1, 9);
+            AddLZ(3, 9);
+            AddLZ(5, 9);
+            AddRZ(9, 9);
+            AddRZ(11, 9);
+            AddRZ(13, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level15()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+            block1s.Clear();
+            block2s.Clear();
+
+            AddGreen(1, 0);
+            AddBlue(5, 0);
+            AddBlue(6, 0);
+            AddDM(7, 0);
+            AddBlue(8, 0);
+            AddBlue(9, 0);
+            AddDM(10, 0);
+            AddBlue(11, 0);
+            AddBlue(12, 0);
+            AddDM(13, 0);
+            AddBlue(14, 0);
+            AddGreen(1, 1);
+            AddBrick(4, 1);
+            AddBrick(5, 1);
+            AddBrick(6, 1);
+            AddYellow(7, 1);
+            AddBrick(8, 1);
+            AddBlock1(10, 1);
+            AddBlock1(13, 1);
+            AddBrick(1, 2);
+            AddBrick(2, 2);
+            AddBrick(3, 2);
+            AddBrick(6, 2);
+            AddYellow(7, 2);
+            AddBrick(8, 2);
+            AddBlock2(10, 2);
+            AddBlock2(13, 2);
+            AddUZ(0, 3);
+            AddBrick(3, 3);
+            AddBrick(4, 3);
+            AddBrick(5, 3);
+            AddYellow(7, 3);
+            AddBrick(8, 3);
+            AddBlock2(10, 3);
+            AddBlock2(13, 3);
+            AddYellow(1, 4);
+            AddYellow(2, 4);
+            AddBrick(4, 4);
+            AddBlock1(7, 4);
+            AddBrick(8, 4);
+            AddBrick(9, 4);
+            AddBrick(10, 4);
+            AddGreen(11, 4);
+            AddBrick(13, 4);
+            AddBrick(0, 5);
+            AddBlock2(1, 5);
+            AddBlock2(2, 5);
+            AddUZ(3, 5);
+            AddBrick(4, 5);
+            AddBlock2(7, 5);
+            AddBrick(10, 5);
+            AddBrick(12, 5);
+            AddBrick(13, 5);
+            AddBrick(14, 5);
+            AddYellow(1, 6);
+            AddYellow(2, 6);
+            AddBrick(4, 6);
+            AddBlock2(7, 6);
+            AddBrick(10, 6);
+            AddBrick(12, 6);
+            AddBrick(0, 7);
+            AddBrick(1, 7);
+            AddBrick(3, 7);
+            AddBrick(4, 7);
+            AddBrick(5, 7);
+            AddBrick(7, 7);
+            AddBrick(9, 7);
+            AddBrick(10, 7);
+            AddBrick(4, 9);
+            AddBrick(10, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level16()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+            block1s.Clear();
+            block2s.Clear();
+
+            AddBrick(6, 0);
+            AddLZ(8, 0);
+            AddBrick(0, 1);
+            AddBrick(1, 1);
+            AddBrick(5, 1);
+            AddBrick(7, 1);
+            AddBrick(9, 1);
+            AddBrick(10, 1);
+            AddBrick(11, 1);
+            AddBrick(12, 1);
+            AddYellow(2, 2);
+            AddBlock2(3, 2);
+            AddYellow(4, 2);
+            AddBrick(7, 2);
+            AddBrick(9, 2);
+            AddBrick(12, 2);
+            AddBrick(14, 2);
+            AddUZ(0, 3);
+            AddBlock1(2, 3);
+            AddBrick(3, 3);
+            AddBlock1(4, 3);
+            AddBrick(5, 3);
+            AddYellow(8, 3);
+            AddBlue(11, 3);
+            AddBlock2(12, 3);
+            AddBlue(13, 3);
+            AddLZ(1, 4);
+            AddBlock2(2, 4);
+            AddBlock2(4, 4);
+            AddBrick(6, 4);
+            AddBlock1(8, 4);
+            AddBrick(9, 4);
+            AddBrick(10, 4);
+            AddBrick(11, 4);
+            AddBrick(12, 4);
+            AddBrick(14, 4);
+            AddBrick(0, 5);
+            AddBrick(6, 5);
+            AddBlock2(8, 5);
+            AddBlue(11, 5);
+            AddBlock2(12, 5);
+            AddBlue(13, 5);
+            AddBrick(6, 6);
+            AddDZ(7, 6);
+            AddBlock1(8, 6);
+            AddBrick(9, 6);
+            AddBrick(10, 6);
+            AddBrick(11, 6);
+            AddBrick(12, 6);
+            AddBrick(14, 6);
+            AddBrick(6, 7);
+            AddYellow(8, 7);
+            AddRZ(9, 7);
+            AddBlue(11, 7);
+            AddBlock2(12, 7);
+            AddBlue(13, 7);
+            AddBlue(1, 8);
+            AddBlue(2, 8);
+            AddGreen(3, 8);
+            AddBlue(4, 8);
+            AddLZ(6, 8);
+            AddBrick(9, 8);
+            AddBrick(10, 8);
+            AddDZ(11, 8);
+            AddBrick(12, 8);
+            AddBrick(14, 8);
+            AddUM(2, 9);
+            AddUM(4, 9);
+            AddBrick(6, 9);
+            AddBrick(8, 9);
+            AddBrick(9, 9);
+
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        public void Level17()
+        {
+            bricks.Clear();
+            greens.Clear();
+            yellows.Clear();
+            blues.Clear();
+            leftmovers.Clear();
+            downmovers.Clear();
+            rightmovers.Clear();
+            upmovers.Clear();
+            upzapps.Clear();
+            downzapps.Clear();
+            leftzapps.Clear();
+            rightzapps.Clear();
+            block1s.Clear();
+            block2s.Clear();
+
+            AddYellow(2, 0);
+            AddYellow(4, 0);
+            AddDM(7, 0);
+            AddBrick(10, 0);
+            AddBrick(13, 0);
+            AddYellow(2, 1);
+            AddYellow(4, 1);
+            AddYellow(6, 1);
+            AddGreen(7, 1);
+            AddYellow(8, 1);
+            AddBrick(10, 1);
+            AddBrick(13, 1);
+            AddYellow(3, 2);
+            AddYellow(6, 2);
+            AddGreen(7, 2);
+            AddYellow(8, 2);
+            AddBrick(10, 2);
+            AddBrick(13, 2);
+            AddYellow(3, 3);
+            AddYellow(6, 3);
+            AddGreen(7, 3);
+            AddYellow(8, 3);
+            AddBrick(10, 3);
+            AddBrick(13, 3);
+            AddYellow(3, 4);
+            AddUM(7, 4);
+            AddBrick(11, 4);
+            AddBrick(12, 4);
+            AddBlue(1, 6);
+            AddBlue(5, 6);
+            AddYellow(7, 6);
+            AddYellow(9, 6);
+            AddYellow(12, 6);
+            AddBlue(1, 7);
+            AddBlue(3, 7);
+            AddBlue(5, 7);
+            AddYellow(7, 7);
+            AddYellow(9, 7);
+            AddGreen(10, 7);
+            AddYellow(12, 7);
+            AddBlue(2, 8);
+            AddBlue(3, 8);
+            AddBlue(4, 8);
+            AddYellow(7, 8);
+            AddYellow(9, 8);
+            AddGreen(11, 8);
+            AddYellow(12, 8);
+            AddBlue(2, 9);
+            AddBlue(4, 9);
+            AddYellow(9, 9);
+            AddYellow(12, 9);
+            
+            player.prevX = player.X;
+            player.prevY = player.Y;
+            player.Y = 9;
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
+        }
+
+        private void AddBlock1(int x, int y)
+        {
+            Block1 b1 = new Block1();
+            b1.vector.X = (b1.X = x) * ((int)(30 * 1.3));
+            b1.vector.Y = (b1.Y = y) * ((int)(30 * 1.3));
+            block1s.Add(b1);
+        }
+
+        private void AddBlock2(int x, int y)
+        {
+            Block2 b2 = new Block2();
+            b2.vector.X = (b2.X = x) * ((int)(30 * 1.3));
+            b2.vector.Y = (b2.Y = y) * ((int)(30 * 1.3));
+            block2s.Add(b2);
+        }
+        
         private void AddUZ(int x, int y)
         {
             UpZapp uz = new UpZapp();
@@ -1149,14 +1795,72 @@ namespace Cyberbox
                 Level10();
                 loadlevel = false;
             }
+            else if (currentLevel == 11 && loadlevel == true)
+            {
+                Level11();
+                loadlevel = false;
+            }
+            else if (currentLevel == 12 && loadlevel == true)
+            {
+                Level12();
+                loadlevel = false;
+            }
+            else if (currentLevel == 13 && loadlevel == true)
+            {
+                Level13();
+                loadlevel = false;
+            }
+            else if (currentLevel == 14 && loadlevel == true)
+            {
+                Level14();
+                loadlevel = false;
+            }
+            else if (currentLevel == 15 && loadlevel == true)
+            {
+                Level15();
+                loadlevel = false;
+            }
+            else if (currentLevel == 16 && loadlevel == true)
+            {
+                Level16();
+                loadlevel = false;
+            }
+            else if (currentLevel == 17 && loadlevel == true)
+            {
+                Level17();
+                loadlevel = false;
+            }
+
+            background.Update(gameTime.ElapsedGameTime.Ticks);
+
+            brick.Update(gameTime.ElapsedGameTime.Ticks);
+
+            green.Update(gameTime.ElapsedGameTime.Ticks);
+
+            yellow.Update(gameTime.ElapsedGameTime.Ticks);
+
+            blue.Update(gameTime.ElapsedGameTime.Ticks);
 
             // Before handling input
             _currentKeyboardState = Keyboard.GetState();
+
+            if (_currentKeyboardState.IsKeyDown(Keys.F) &&
+               _previousKeyboardState.IsKeyUp(Keys.F))
+            {
+                graphics.ToggleFullScreen();
+            }
 
             if (_currentKeyboardState.IsKeyDown(Keys.Up) &&
                _previousKeyboardState.IsKeyUp(Keys.Up))
             {
                 bool cnt = false;
+                for (int i = 0; i < block1s.Count; i++)
+                {
+                    if (block1s[i].X == player.X && block1s[i].Y == player.Y - 1)
+                    {
+                        cnt = true;
+                    }
+                }
                 for (int i = 0; i < downzapps.Count; i++)
                 {
                     if (downzapps[i].X == player.X && downzapps[i].Y == player.Y - 1)
@@ -1255,6 +1959,13 @@ namespace Cyberbox
                 bool ispushed = false;
                 bool stuck = false;
                 bool cnt = false;
+                for (int i = 0; i < block1s.Count; i++)
+                {
+                    if (block1s[i].X == player.X && block1s[i].Y == player.Y + 1)
+                    {
+                        cnt = true;
+                    }
+                }
                 for (int i = 0; i < upzapps.Count; i++)
                 {
                     if (upzapps[i].X == player.X && upzapps[i].Y == player.Y + 1)
@@ -1287,7 +1998,16 @@ namespace Cyberbox
                 {
                     if (downzapps[i].X == player.X && downzapps[i].Y == player.Y + 1)
                     {
-                        player.Y += 1;
+                        bool inc = true;
+                        for (int j = 0; j < greens.Count; j++)
+                        {
+                            if (greens[j].X == player.X && greens[j].Y == player.Y + 2)
+                                inc = false;
+                        }
+                        if (inc)
+                            player.Y += 1;
+                        else
+                            cnt = true;
                         player.vector.Y = player.Y * 39;
                         stuck = false;
                     }
@@ -1351,6 +2071,13 @@ namespace Cyberbox
                 bool ispushed = false;
                 bool stuck = false;
                 bool cnt = false;
+                for (int i = 0; i < block1s.Count; i++)
+                {
+                    if (block1s[i].X == player.X - 1 && block1s[i].Y == player.Y)
+                    {
+                        cnt = true;
+                    }
+                }
                 for (int i = 0; i < upzapps.Count; i++)
                 {
                     if (upzapps[i].X == player.X - 1 && upzapps[i].Y == player.Y)
@@ -1441,102 +2168,19 @@ namespace Cyberbox
                     }
                 }
             }
-            if (_currentKeyboardState.IsKeyUp(Keys.Up) &&
-                _currentKeyboardState.IsKeyUp(Keys.Down) &&
-                _currentKeyboardState.IsKeyUp(Keys.Left) &&
-                _currentKeyboardState.IsKeyUp(Keys.Right))
-            {
-                if (upmovers.Count > 0)
-                {
-                    for (int i = 0; i < upmovers.Count; i++)
-                    {
-                        bool ispushe = false;
-                        bool stuc = false;
-                        ispushe = pushUM(player, upmovers[i], 0, -1);
-                        if (ispushe)
-                        {
-                            if (upmovers[i].Y > 0)
-                            {
-                                upmovers[i].Y -= 1;
-                                if (player.X == upmovers[i].X && player.Y == upmovers[i].Y)
-                                {
-                                    upmovers[i].Y += 1;
-                                }
-                            }
-                            upmovers[i].vector.Y = upmovers[i].Y * ((int)(30 * 1.3));
-                        }
-                    }
-                }
-                if (downmovers.Count > 0)
-                {
-                    for (int i = 0; i < downmovers.Count; i++)
-                    {
-                        bool ispushe = false;
-                        bool stuc = false;
-                        ispushe = pushDM(player, downmovers[i], 0, 1);
-                        if (ispushe)
-                        {
-                            if (downmovers[i].Y < 9)
-                            {
-                                downmovers[i].Y += 1;
-                                if (player.X == downmovers[i].X && player.Y == downmovers[i].Y)
-                                {
-                                    downmovers[i].Y -= 1;
-                                }
-                            }
-                            downmovers[i].vector.Y = downmovers[i].Y * ((int)(30 * 1.3));
-                        }
-                    }
-                }
-                if (leftmovers.Count > 0)
-                {
-                    for (int i = 0; i < leftmovers.Count; i++)
-                    {
-                        bool ispushe = false;
-                        bool stuc = false;
-                        ispushe = pushLM(player, leftmovers[i], -1, 0);
-                        if (ispushe)
-                        {
-                            if (leftmovers[i].X > 0)
-                            {
-                                leftmovers[i].X -= 1;
-                                if (player.X == leftmovers[i].X && player.Y == leftmovers[i].Y)
-                                {
-                                    leftmovers[i].X += 1;
-                                }
-                            }
-                            leftmovers[i].vector.X = leftmovers[i].X * ((int)(30 * 1.3));
-                        }
-                    }
-                }
-                if (rightmovers.Count > 0)
-                {
-                    for (int i = 0; i < rightmovers.Count; i++)
-                    {
-                        bool ispushe = false;
-                        bool stuc = false;
-                        ispushe = pushRM(player, rightmovers[i], 1, 0);
-                        if (ispushe)
-                        {
-                            if (rightmovers[i].X < 14)
-                            {
-                                rightmovers[i].X += 1;
-                                if (player.X == rightmovers[i].X && player.Y == rightmovers[i].Y)
-                                {
-                                    rightmovers[0].X -= 1;
-                                }
-                            }
-                            rightmovers[i].vector.X = rightmovers[i].X * ((int)(30 * 1.3));
-                        }
-                    }
-                }
-            }
             if (_currentKeyboardState.IsKeyDown(Keys.Right) &&
                _previousKeyboardState.IsKeyUp(Keys.Right))
             {
                 bool ispushed = false;
                 bool stuck = false;
                 bool cnt = false;
+                for (int i = 0; i < block1s.Count; i++)
+                {
+                    if (block1s[i].X == player.X + 1 && block1s[i].Y == player.Y)
+                    {
+                        cnt = true;
+                    }
+                }
                 for (int i = 0; i < upzapps.Count; i++)
                 {
                     if (upzapps[i].X == player.X + 1 && upzapps[i].Y == player.Y)
@@ -1626,6 +2270,96 @@ namespace Cyberbox
                     }
                 }
             }
+            if (_currentKeyboardState.IsKeyUp(Keys.Up) &&
+                _currentKeyboardState.IsKeyUp(Keys.Down) &&
+                _currentKeyboardState.IsKeyUp(Keys.Left) &&
+                _currentKeyboardState.IsKeyUp(Keys.Right))
+            {
+                if (downmovers.Count > 0)
+                {
+                    for (int i = 0; i < downmovers.Count; i++)
+                    {
+                        bool ispushe = false;
+                        bool stuc = false;
+                        ispushe = pushDM(player, downmovers[i], 0, 1);
+                        if (ispushe)
+                        {
+                            if (downmovers[i].Y < 9)
+                            {
+                                downmovers[i].Y += 1;
+                                if (player.X == downmovers[i].X && player.Y == downmovers[i].Y)
+                                {
+                                    downmovers[i].Y -= 1;
+                                }
+                            }
+                            downmovers[i].vector.Y = downmovers[i].Y * ((int)(30 * 1.3));
+                        }
+                    }
+                }
+                if (upmovers.Count > 0)
+                {
+                    for (int i = 0; i < upmovers.Count; i++)
+                    {
+                        bool ispushe = false;
+                        bool stuc = false;
+                        ispushe = pushUM(player, upmovers[i], 0, -1);
+                        if (ispushe)
+                        {
+                            if (upmovers[i].Y > 0)
+                            {
+                                upmovers[i].Y -= 1;
+                                if (player.X == upmovers[i].X && player.Y == upmovers[i].Y)
+                                {
+                                    upmovers[i].Y += 1;
+                                }
+                            }
+                            upmovers[i].vector.Y = upmovers[i].Y * ((int)(30 * 1.3));
+                        }
+                    }
+                }
+                if (leftmovers.Count > 0)
+                {
+                    for (int i = 0; i < leftmovers.Count; i++)
+                    {
+                        bool ispushe = false;
+                        bool stuc = false;
+                        ispushe = pushLM(player, leftmovers[i], -1, 0);
+                        if (ispushe)
+                        {
+                            if (leftmovers[i].X > 0)
+                            {
+                                leftmovers[i].X -= 1;
+                                if (player.X == leftmovers[i].X && player.Y == leftmovers[i].Y)
+                                {
+                                    leftmovers[i].X += 1;
+                                }
+                            }
+                            leftmovers[i].vector.X = leftmovers[i].X * ((int)(30 * 1.3));
+                        }
+                    }
+                }
+                if (rightmovers.Count > 0)
+                {
+                    for (int i = 0; i < rightmovers.Count; i++)
+                    {
+                        bool ispushe = false;
+                        bool stuc = false;
+                        ispushe = pushRM(player, rightmovers[i], 1, 0);
+                        if (ispushe)
+                        {
+                            if (rightmovers[i].X < 14)
+                            {
+                                rightmovers[i].X += 1;
+                                if (player.X == rightmovers[i].X && player.Y == rightmovers[i].Y)
+                                {
+                                    rightmovers[0].X -= 1;
+                                }
+                            }
+                            rightmovers[i].vector.X = rightmovers[i].X * ((int)(30 * 1.3));
+                        }
+                    }
+                }
+            }
 
             for (int i = 0; i < greens.Count; i++)
             {
@@ -1704,7 +2438,10 @@ namespace Cyberbox
                 }
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            if (_currentKeyboardState.IsKeyDown(Keys.R) && 
+                _previousKeyboardState.IsKeyUp(Keys.R) && 
+                cheat && 
+                attempts > 0)
             {
                 if(currentLevel == 1)
                     Level1();
@@ -1726,6 +2463,22 @@ namespace Cyberbox
                     Level9();
                 if (currentLevel == 10)
                     Level10();
+                if (currentLevel == 11)
+                    Level11();
+                if (currentLevel == 12)
+                    Level12();
+                if (currentLevel == 13)
+                    Level13();
+                if (currentLevel == 14)
+                    Level14();
+                if (currentLevel == 15)
+                    Level15();
+                if (currentLevel == 16)
+                    Level16();
+                if (currentLevel == 17)
+                    Level17();
+
+                attempts--;
 
                 player.X = 7;
                 player.Y = 9;
@@ -1747,16 +2500,27 @@ namespace Cyberbox
                 }
             }
 
-            if (player.X == 7 && player.Y == -1)
+            if (player.X == 7 && player.Y == -1 && currentLevel < 18)
             {
                 currentLevel = currentLevel + 1;
                 loadlevel = true;
-                if (currentLevel == 11)
+                if (currentLevel == 18)
                     drawwin = true;
             }
             else
             {
                 drawwin = false;
+            }
+
+            if (currentLevel == 18)
+            {
+                player.X = 7;
+                player.Y = -1;
+                
+                player.vector.X = player.X * 39;
+                player.vector.Y = player.Y * 39;
+
+                drawwin = true;
             }
 
             base.Update(gameTime);
@@ -1796,6 +2560,13 @@ namespace Cyberbox
             for (int i = 0; i < bricks.Count; i++)
             {
                 if (shp.X + x == bricks[i].X && shp.Y + y == bricks[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < downmovers.Count; i++)
+            {
+                if (shp.X + x == downmovers[i].X && shp.Y + y == downmovers[i].Y)
                 {
                     ispushed = false;
                 }
@@ -1951,9 +2722,546 @@ namespace Cyberbox
             return ispushed;
         }
 
+        public Boolean pushBlock1(Circle player, Shape shp, int x, int y)
+        {
+            Boolean ispushed = true;
+            for (int i = 0; i < upzapps.Count; i++)
+            {
+                if (shp.X + x == upzapps[i].X && shp.Y + y == upzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < downzapps.Count; i++)
+            {
+                if (shp.X + x == downzapps[i].X && shp.Y + y == downzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < leftzapps.Count; i++)
+            {
+                if (shp.X + x == leftzapps[i].X && shp.Y + y == leftzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < rightzapps.Count; i++)
+            {
+                if (shp.X + x == rightzapps[i].X && shp.Y + y == rightzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < bricks.Count; i++)
+            {
+                if (shp.X + x == bricks[i].X && shp.Y + y == bricks[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            if (x == 0 && y != 0)
+            {
+                for (int i = 0; i < blues.Count; i++)
+                {
+                    if (shp.X == blues[i].X && shp.Y + y == blues[i].Y)
+                    {
+                        ispushed = false;
+                    }
+                }
+            }
+            else if (y == 0 && x != 0)
+            {
+                for (int i = 0; i < yellows.Count; i++)
+                {
+                    if (shp.X + x == yellows[i].X && shp.Y == yellows[i].Y)
+                    {
+                        ispushed = false;
+                    }
+                }
+            }
+            if (shp.X + x == player.X && shp.Y + y == player.Y)
+            {
+                ispushed = false;
+                return ispushed;
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < greens.Count; i++)
+            {
+                if (shp.X + x == greens[i].X && shp.Y + y == greens[i].Y)
+                {
+                    ispushed = pushGreen(greens[i], x, y);
+                    if (ispushed)
+                    {
+                        if (greens[i].X > 0 && greens[i].X < 14)
+                            greens[i].X += x;
+                        else
+                            if (greens[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (greens[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (greens[i].Y > 0 && greens[i].Y < 9)
+                            greens[i].Y += y;
+                        else
+                            if (greens[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (greens[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
+                        greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < blues.Count; i++)
+            {
+                if (shp.X + x == blues[i].X && shp.Y + y == blues[i].Y)
+                {
+                    ispushed = pushBlue(blues[i], x);
+                    if (ispushed)
+                    {
+                        if (blues[i].X > 0 && blues[i].X < 14)
+                            blues[i].X += x;
+                        else
+                            if (blues[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (blues[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < yellows.Count; i++)
+            {
+                if (shp.X + x == yellows[i].X && shp.Y + y == yellows[i].Y)
+                {
+                    ispushed = pushYellow(yellows[i], y);
+                    if (ispushed)
+                    {
+                        if (yellows[i].Y > 0 && yellows[i].Y < 9)
+                            yellows[i].Y += y;
+                        else
+                            if (yellows[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (yellows[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            return ispushed;
+        }
+
+        public Boolean pushBlock2(Circle player, Shape shp, int x, int y)
+        {
+            Boolean ispushed = true;
+            for (int i = 0; i < upzapps.Count; i++)
+            {
+                if (shp.X + x == upzapps[i].X && shp.Y + y == upzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < downzapps.Count; i++)
+            {
+                if (shp.X + x == downzapps[i].X && shp.Y + y == downzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < leftzapps.Count; i++)
+            {
+                if (shp.X + x == leftzapps[i].X && shp.Y + y == leftzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < rightzapps.Count; i++)
+            {
+                if (shp.X + x == rightzapps[i].X && shp.Y + y == rightzapps[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < bricks.Count; i++)
+            {
+                if (shp.X + x == bricks[i].X && shp.Y + y == bricks[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            if (x == 0 && y != 0)
+            {
+                for (int i = 0; i < blues.Count; i++)
+                {
+                    if (shp.X == blues[i].X && shp.Y + y == blues[i].Y)
+                    {
+                        ispushed = false;
+                    }
+                }
+            }
+            else if (y == 0 && x != 0)
+            {
+                for (int i = 0; i < yellows.Count; i++)
+                {
+                    if (shp.X + x == yellows[i].X && shp.Y == yellows[i].Y)
+                    {
+                        ispushed = false;
+                    }
+                }
+            }
+            if (shp.X + x == player.X && shp.Y + y == player.Y)
+            {
+                ispushed = false;
+                return ispushed;
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < greens.Count; i++)
+            {
+                if (shp.X + x == greens[i].X && shp.Y + y == greens[i].Y)
+                {
+                    ispushed = pushGreen(greens[i], x, y);
+                    if (ispushed)
+                    {
+                        if (greens[i].X > 0 && greens[i].X < 14)
+                            greens[i].X += x;
+                        else
+                            if (greens[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (greens[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (greens[i].Y > 0 && greens[i].Y < 9)
+                            greens[i].Y += y;
+                        else
+                            if (greens[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (greens[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
+                        greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < blues.Count; i++)
+            {
+                if (shp.X + x == blues[i].X && shp.Y + y == blues[i].Y)
+                {
+                    ispushed = pushBlue(blues[i], x);
+                    if (ispushed)
+                    {
+                        if (blues[i].X > 0 && blues[i].X < 14)
+                            blues[i].X += x;
+                        else
+                            if (blues[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (blues[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < yellows.Count; i++)
+            {
+                if (shp.X + x == yellows[i].X && shp.Y + y == yellows[i].Y)
+                {
+                    ispushed = pushYellow(yellows[i], y);
+                    if (ispushed)
+                    {
+                        if (yellows[i].Y > 0 && yellows[i].Y < 9)
+                            yellows[i].Y += y;
+                        else
+                            if (yellows[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (yellows[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            return ispushed;
+        }
+        
         public Boolean pushDM(Circle player, Shape shp, int x, int y)
         {
             Boolean ispushed = true;
+            for (int i = 0; i < upmovers.Count; i++)
+            {
+                if (shp.X + x == upmovers[i].X && shp.Y + y == upmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
             for (int i = 0; i < upzapps.Count; i++)
             {
                 if (shp.X + x == upzapps[i].X && shp.Y + y == upzapps[i].Y)
@@ -2056,6 +3364,100 @@ namespace Cyberbox
                     }
                 }
             }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
             for (int i = 0; i < greens.Count; i++)
             {
                 if (shp.X + x == greens[i].X && shp.Y + y == greens[i].Y)
@@ -2138,6 +3540,13 @@ namespace Cyberbox
         public Boolean pushUM(Circle player, Shape shp, int x, int y)
         {
             Boolean ispushed = true;
+            for (int i = 0; i < downmovers.Count; i++)
+            {
+                if (shp.X + x == downmovers[i].X && shp.Y + y == downmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
             for (int i = 0; i < upzapps.Count; i++)
             {
                 if (shp.X + x == upzapps[i].X && shp.Y + y == upzapps[i].Y)
@@ -2197,6 +3606,100 @@ namespace Cyberbox
                     if (shp.X + x == yellows[i].X && shp.Y == yellows[i].Y)
                     {
                         ispushed = false;
+                    }
+                }
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
                     }
                 }
             }
@@ -2454,6 +3957,27 @@ namespace Cyberbox
                     ispushed = false;
                 }
             }
+            for (int i = 0; i < upmovers.Count; i++)
+            {
+                if (shp.X + x == upmovers[i].X && shp.Y + y == upmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < downmovers.Count; i++)
+            {
+                if (shp.X + x == downmovers[i].X && shp.Y + y == downmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < leftmovers.Count; i++)
+            {
+                if (shp.X + x == leftmovers[i].X && shp.Y + y == leftmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
             for (int i = 0; i < bricks.Count; i++)
             {
                 if (shp.X + x == bricks[i].X && shp.Y + y == bricks[i].Y)
@@ -2465,6 +3989,100 @@ namespace Cyberbox
             {
                 ispushed = false;
                 return ispushed;
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
             }
             for (int i = 0; i < greens.Count; i++)
             {
@@ -2656,6 +4274,64 @@ namespace Cyberbox
                     }
                 }
             }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X == block2s[i].X && shp.Y + y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], 0, y);
+                    if (ispushed)
+                    {
+                        if (block2s[i].Y > 0 && block2s[i].Y < 9)
+                            block2s[i].Y += y;
+                        else
+                            if (block2s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.Y = block2s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X == block1s[i].X && shp.Y + y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], 0, y);
+                    if (ispushed)
+                    {
+                        if (block1s[i].Y > 0 && block1s[i].Y < 9)
+                            block1s[i].Y += y;
+                        else
+                            if (block1s[i].Y == 0)
+                            {
+                                if (y < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].Y == 9)
+                            {
+                                if (y > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.Y = block1s[i].Y * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
             for (int i = 0; i < greens.Count; i++)
             {
                 if (shp.X == greens[i].X && shp.Y + y == greens[i].Y)
@@ -2731,6 +4407,64 @@ namespace Cyberbox
                 ispushed = false;
                 return ispushed;
             }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                if (shp.X + x == block2s[i].X && shp.Y == block2s[i].Y)
+                {
+                    ispushed = pushBlock2(player, block2s[i], x, 0);
+                    if (ispushed)
+                    {
+                        if (block2s[i].X > 0 && block2s[i].X < 14)
+                            block2s[i].X += x;
+                        else
+                            if (block2s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block2s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block2s[i].vector.X = block2s[i].X * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                if (shp.X + x == block1s[i].X && shp.Y == block1s[i].Y)
+                {
+                    ispushed = pushBlock1(player, block1s[i], x, 0);
+                    if (ispushed)
+                    {
+                        if (block1s[i].X > 0 && block1s[i].X < 14)
+                            block1s[i].X += x;
+                        else
+                            if (block1s[i].X == 0)
+                            {
+                                if (x < 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                            else if (block1s[i].X == 14)
+                            {
+                                if (x > 0)
+                                {
+                                    ispushed = false;
+                                }
+                            }
+                        block1s[i].vector.X = block1s[i].X * ((int)(30 * 1.3));
+                        return ispushed;
+                    }
+                }
+            }
             for (int i = 0; i < blues.Count; i++)
             {
                 if (shp.X + x == blues[i].X && shp.Y == blues[i].Y)
@@ -2798,81 +4532,100 @@ namespace Cyberbox
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            background.Draw(gameTime);
-
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            spriteBatch.Draw(background.GetTexture(), new Rectangle(0, 0, 685, 490), Color.White);
             // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
-            Rectangle titleSafeRectangle = new Rectangle(48, 58, 590, 396);
+            Rectangle titleSafeRectangle = new Rectangle(18, 58, 590, 396);
             // Call our method (also defined in this blog-post)
             DrawBorder(titleSafeRectangle, 1, Color.White);
             // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
-            Rectangle exit = new Rectangle(324, 58, 39, 1);
+            Rectangle exit = new Rectangle(290, 58, 39, 1);
             // Call our method (also defined in this blog-post)
-            DrawBorder(exit, 1, Color.Black);
-            Rectangle exitLeft = new Rectangle(323, 0, 1, 58);
+            DrawBorder(exit, 1, Color.Blue);
+            Rectangle exitLeft = new Rectangle(289, 0, 1, 58);
             // Call our method (also defined in this blog-post)
             DrawBorder(exitLeft, 1, Color.White);
-            Rectangle exitRight = new Rectangle(363, 0, 1, 58);
+            Rectangle exitRight = new Rectangle(329, 0, 1, 58);
             // Call our method (also defined in this blog-post)
             DrawBorder(exitRight, 1, Color.White);
             for (int i = 0; i < bricks.Count; i++)
             {
-                spriteBatch.Draw(brick, bricks[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(brick.GetTexture(), bricks[i].vector + new Vector2(20, 60), null, Color.Wheat, 0, Vector2.Zero, 0.08f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < greens.Count; i++)
             {
-                spriteBatch.Draw(green, greens[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(green.GetTexture(), greens[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < blues.Count; i++)
             {
-                spriteBatch.Draw(blue, blues[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(blue.GetTexture(), blues[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < yellows.Count; i++)
             {
-                spriteBatch.Draw(yellow, yellows[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(yellow.GetTexture(), yellows[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < downmovers.Count; i++)
             {
-                spriteBatch.Draw(downmover, downmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(downmover, downmovers[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < upmovers.Count; i++)
             {
-                spriteBatch.Draw(upmover, upmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(upmover, upmovers[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < rightmovers.Count; i++)
             {
-                spriteBatch.Draw(rightmover, rightmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(rightmover, rightmovers[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < leftmovers.Count; i++)
             {
-                spriteBatch.Draw(leftmover, leftmovers[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(leftmover, leftmovers[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < upzapps.Count; i++)
             {
-                spriteBatch.Draw(upzapp, upzapps[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(upzapp, upzapps[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < downzapps.Count; i++)
             {
-                spriteBatch.Draw(downzapp, downzapps[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(downzapp, downzapps[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < leftzapps.Count; i++)
             {
-                spriteBatch.Draw(leftzapp, leftzapps[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(leftzapp, leftzapps[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < rightzapps.Count; i++)
             {
-                spriteBatch.Draw(rightzapp, rightzapps[i].vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(rightzapp, rightzapps[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
-            spriteBatch.Draw(circle, player.vector + new Vector2(50, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+            for (int i = 0; i < block1s.Count; i++)
+            {
+                spriteBatch.Draw(block1, block1s[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+            }
+            for (int i = 0; i < block2s.Count; i++)
+            {
+                spriteBatch.Draw(block2, block2s[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+            }
+            spriteBatch.Draw(circle, player.vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             if (drawwin)
             {
-                spriteBatch.DrawString(spriteFont, "You win!", new Vector2(0, 0), Color.White);
+                spriteBatch.DrawString(spriteFont, "You Won.", new Vector2(0, 0), Color.White);
             }
             else
             {
-                spriteBatch.DrawString(spriteFont, "You win!", new Vector2(0, 0), Color.Black);
             }
+            spriteBatch.DrawString(cyberFont, "Cyberbox", new Vector2(336, 7), Color.SteelBlue);
+            if (!drawwin)
+            {
+                spriteBatch.DrawString(spriteFont2, "Press 'R' To Retry Level", new Vector2(61, 10), Color.White);
+                spriteBatch.DrawString(spriteFont2, "Attempts Remaining: " + attempts, new Vector2(61, 30), Color.White);
+            }
+            int roomNumberIndex = currentLevel - 1;
+            if (currentLevel == 18)
+            {
+                roomNumberIndex = roomNumberIndex - 1;
+            }
+            spriteBatch.DrawString(spriteFont2, "Toggle 'F' For Fullscreen", new Vector2(21, 465), Color.White);
+            spriteBatch.DrawString(spriteFont3, "Room " + currentLevel + ": " + rooms[roomNumberIndex], new Vector2(250, 465), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
