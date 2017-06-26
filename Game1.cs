@@ -1,18 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Cyberbox
+namespace Cybrbox
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class Game1 : Game
     {
-        GifAnimation.GifAnimation background, brick, green, yellow, blue;
+        Texture2D brick, green, yellow, blue;
         Boolean cheat = true;
         String[] rooms = new String[17];
         GraphicsDeviceManager graphics;
@@ -120,7 +120,6 @@ namespace Cyberbox
             graphics.PreferredBackBufferWidth = 615;
             graphics.PreferredBackBufferHeight = 490;
             graphics.ToggleFullScreen();
-            graphics.ToggleFullScreen();
             Content.RootDirectory = "Content";
         }
 
@@ -185,14 +184,13 @@ namespace Cyberbox
             //background.LoadContent();
 
             // TODO: use this.Content to load your game content here
-            background = Content.Load<GifAnimation.GifAnimation>("bk");
             circle = Content.Load<Texture2D>("circle");
             block1 = Content.Load<Texture2D>("block1");
             block2 = Content.Load<Texture2D>("block2");
-            brick = Content.Load<GifAnimation.GifAnimation>("brick");
-            green = Content.Load<GifAnimation.GifAnimation>("green");
-            yellow = Content.Load<GifAnimation.GifAnimation>("yellow");
-            blue = Content.Load<GifAnimation.GifAnimation>("blue");
+            brick = Content.Load<Texture2D>("brick");
+            green = Content.Load<Texture2D>("green");
+            yellow = Content.Load<Texture2D>("yellow");
+            blue = Content.Load<Texture2D>("blue");
             rightmover = Content.Load<Texture2D>("rightmover");
             leftmover = Content.Load<Texture2D>("leftmover");
             downmover = Content.Load<Texture2D>("downmover");
@@ -241,8 +239,8 @@ namespace Cyberbox
             player.prevY = 9;
             player.X = 7;
             player.Y = 9;
-            player.vector.X = player.X *((int)(30*1.3));
-            player.vector.Y = player.Y *((int)(30*1.3));
+            player.vector.X = player.X * ((int)(30 * 1.3));
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
 
             AddBrick(4, 0);
             AddBrick(10, 0);
@@ -358,7 +356,7 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y *((int)(30*1.3));
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
         }
 
         public void Level3()
@@ -441,7 +439,7 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y *((int)(30*1.3));
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
         }
 
         public void Level4()
@@ -528,7 +526,7 @@ namespace Cyberbox
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
-            player.vector.Y = player.Y *((int)(30*1.3));
+            player.vector.Y = player.Y * ((int)(30 * 1.3));
         }
 
         public void Level5()
@@ -1604,7 +1602,7 @@ namespace Cyberbox
             AddBlue(4, 9);
             AddYellow(9, 9);
             AddYellow(12, 9);
-            
+
             player.prevX = player.X;
             player.prevY = player.Y;
             player.Y = 9;
@@ -1626,7 +1624,7 @@ namespace Cyberbox
             b2.vector.Y = (b2.Y = y) * ((int)(30 * 1.3));
             block2s.Add(b2);
         }
-        
+
         private void AddUZ(int x, int y)
         {
             UpZapp uz = new UpZapp();
@@ -1634,7 +1632,7 @@ namespace Cyberbox
             uz.vector.Y = (uz.Y = y) * ((int)(30 * 1.3));
             upzapps.Add(uz);
         }
-        
+
         private void AddDZ(int x, int y)
         {
             DownZapp dz = new DownZapp();
@@ -1642,7 +1640,7 @@ namespace Cyberbox
             dz.vector.Y = (dz.Y = y) * ((int)(30 * 1.3));
             downzapps.Add(dz);
         }
-        
+
         private void AddLZ(int x, int y)
         {
             LeftZapp lz = new LeftZapp();
@@ -1658,28 +1656,28 @@ namespace Cyberbox
             rz.vector.Y = (rz.Y = y) * ((int)(30 * 1.3));
             rightzapps.Add(rz);
         }
-        
+
         private void AddLM(int x, int y)
         {
             LeftMover lm = new LeftMover();
-            lm.vector.X = (lm.X = x) *((int)(30*1.3));
-            lm.vector.Y = (lm.Y = y) *((int)(30*1.3));
+            lm.vector.X = (lm.X = x) * ((int)(30 * 1.3));
+            lm.vector.Y = (lm.Y = y) * ((int)(30 * 1.3));
             leftmovers.Add(lm);
         }
 
         private void AddRM(int x, int y)
         {
             RightMover rm = new RightMover();
-            rm.vector.X = (rm.X = x) *((int)(30*1.3));
-            rm.vector.Y = (rm.Y = y) *((int)(30*1.3));
+            rm.vector.X = (rm.X = x) * ((int)(30 * 1.3));
+            rm.vector.Y = (rm.Y = y) * ((int)(30 * 1.3));
             rightmovers.Add(rm);
         }
 
         private void AddDM(int x, int y)
         {
             DownMover dm = new DownMover();
-            dm.vector.X = (dm.X = x) *((int)(30*1.3));
-            dm.vector.Y = (dm.Y = y) *((int)(30*1.3));
+            dm.vector.X = (dm.X = x) * ((int)(30 * 1.3));
+            dm.vector.Y = (dm.Y = y) * ((int)(30 * 1.3));
             downmovers.Add(dm);
         }
 
@@ -1694,32 +1692,32 @@ namespace Cyberbox
         private void AddBrick(int x, int y)
         {
             Brick brick = new Brick();
-            brick.vector.X = (brick.X = x) *((int)(30*1.3));
-            brick.vector.Y = (brick.Y = y) *((int)(30*1.3));
+            brick.vector.X = (brick.X = x) * ((int)(30 * 1.3));
+            brick.vector.Y = (brick.Y = y) * ((int)(30 * 1.3));
             bricks.Add(brick);
         }
 
         private void AddGreen(int x, int y)
         {
             Green green = new Green();
-            green.vector.X = (green.X = x) *((int)(30*1.3));
-            green.vector.Y = (green.Y = y) *((int)(30*1.3));
+            green.vector.X = (green.X = x) * ((int)(30 * 1.3));
+            green.vector.Y = (green.Y = y) * ((int)(30 * 1.3));
             greens.Add(green);
         }
 
         private void AddYellow(int x, int y)
         {
             Yellow yellow = new Yellow();
-            yellow.vector.X = (yellow.X = x) *((int)(30*1.3));
-            yellow.vector.Y = (yellow.Y = y) *((int)(30*1.3));
+            yellow.vector.X = (yellow.X = x) * ((int)(30 * 1.3));
+            yellow.vector.Y = (yellow.Y = y) * ((int)(30 * 1.3));
             yellows.Add(yellow);
         }
 
         private void AddBlue(int x, int y)
         {
             Blue blue = new Blue();
-            blue.vector.X = (blue.X = x) *((int)(30*1.3));
-            blue.vector.Y = (blue.Y = y) *((int)(30*1.3));
+            blue.vector.X = (blue.X = x) * ((int)(30 * 1.3));
+            blue.vector.Y = (blue.Y = y) * ((int)(30 * 1.3));
             blues.Add(blue);
         }
 
@@ -1739,10 +1737,6 @@ namespace Cyberbox
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
             // TODO: Add your update logic here
             if (currentLevel == 0 && loadlevel == true)
             {
@@ -1831,25 +1825,15 @@ namespace Cyberbox
                 loadlevel = false;
             }
 
-            background.Update(gameTime.ElapsedGameTime.Ticks);
-
-            brick.Update(gameTime.ElapsedGameTime.Ticks);
-
-            green.Update(gameTime.ElapsedGameTime.Ticks);
-
-            yellow.Update(gameTime.ElapsedGameTime.Ticks);
-
-            blue.Update(gameTime.ElapsedGameTime.Ticks);
-
             // Before handling input
             _currentKeyboardState = Keyboard.GetState();
 
-            if (_currentKeyboardState.IsKeyDown(Keys.F) &&
-               _previousKeyboardState.IsKeyUp(Keys.F))
+            if (_currentKeyboardState.IsKeyDown(Keys.Escape) &&
+               _previousKeyboardState.IsKeyUp(Keys.Escape))
             {
-                graphics.ToggleFullScreen();
+                Environment.Exit(0);
             }
-
+            
             if (_currentKeyboardState.IsKeyDown(Keys.Up) &&
                _previousKeyboardState.IsKeyUp(Keys.Up))
             {
@@ -1907,9 +1891,9 @@ namespace Cyberbox
                         ispushed = pushGreen(greens[i], 0, -1);
                         if (ispushed)
                         {
-                            if(greens[i].Y > 0)
+                            if (greens[i].Y > 0)
                                 greens[i].Y -= 1;
-                            greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
+                            greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -1924,9 +1908,9 @@ namespace Cyberbox
                         ispushed = pushYellow(yellows[i], -1);
                         if (ispushed)
                         {
-                            if(yellows[i].Y > 0)
+                            if (yellows[i].Y > 0)
                                 yellows[i].Y -= 1;
-                            yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
+                            yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2019,9 +2003,9 @@ namespace Cyberbox
                         ispushed = pushGreen(greens[i], 0, 1);
                         if (ispushed)
                         {
-                            if(greens[i].Y < 9)
+                            if (greens[i].Y < 9)
                                 greens[i].Y += 1;
-                            greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
+                            greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2036,9 +2020,9 @@ namespace Cyberbox
                         ispushed = pushYellow(yellows[i], 1);
                         if (ispushed)
                         {
-                            if(yellows[i].Y < 9)
+                            if (yellows[i].Y < 9)
                                 yellows[i].Y += 1;
-                            yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
+                            yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2122,9 +2106,9 @@ namespace Cyberbox
                         ispushed = pushGreen(greens[i], -1, 0);
                         if (ispushed)
                         {
-                            if(greens[i].X > 0)
+                            if (greens[i].X > 0)
                                 greens[i].X -= 1;
-                            greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                            greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2139,9 +2123,9 @@ namespace Cyberbox
                         ispushed = pushBlue(blues[i], -1);
                         if (ispushed)
                         {
-                            if(blues[i].X > 0)
+                            if (blues[i].X > 0)
                                 blues[i].X -= 1;
-                            blues[i].vector.X = blues[i].X *((int)(30*1.3));
+                            blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2224,9 +2208,9 @@ namespace Cyberbox
                         ispushed = pushGreen(greens[i], 1, 0);
                         if (ispushed)
                         {
-                            if(greens[i].X < 14)
+                            if (greens[i].X < 14)
                                 greens[i].X += 1;
-                            greens[i].vector.X = greens[i].X *((int)(30*1.3));
+                            greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2241,9 +2225,9 @@ namespace Cyberbox
                         ispushed = pushBlue(blues[i], 1);
                         if (ispushed)
                         {
-                            if(blues[i].X < 14)
+                            if (blues[i].X < 14)
                                 blues[i].X += 1;
-                            blues[i].vector.X = blues[i].X *((int)(30*1.3));
+                            blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
                         }
                         else
                         {
@@ -2438,12 +2422,12 @@ namespace Cyberbox
                 }
             }
 
-            if (_currentKeyboardState.IsKeyDown(Keys.R) && 
-                _previousKeyboardState.IsKeyUp(Keys.R) && 
-                cheat && 
+            if (_currentKeyboardState.IsKeyDown(Keys.R) &&
+                _previousKeyboardState.IsKeyUp(Keys.R) &&
+                cheat &&
                 attempts > 0)
             {
-                if(currentLevel == 1)
+                if (currentLevel == 1)
                     Level1();
                 if (currentLevel == 2)
                     Level2();
@@ -2495,8 +2479,8 @@ namespace Cyberbox
                 {
                     player.X = player.prevX;
                     player.Y = player.prevY;
-                    player.vector.X = player.X *((int)(30*1.3));
-                    player.vector.Y = player.Y *((int)(30*1.3));
+                    player.vector.X = player.X * ((int)(30 * 1.3));
+                    player.vector.Y = player.Y * ((int)(30 * 1.3));
                 }
             }
 
@@ -2516,7 +2500,7 @@ namespace Cyberbox
             {
                 player.X = 7;
                 player.Y = -1;
-                
+
                 player.vector.X = player.X * 39;
                 player.vector.Y = player.Y * 39;
 
@@ -2567,6 +2551,13 @@ namespace Cyberbox
             for (int i = 0; i < downmovers.Count; i++)
             {
                 if (shp.X + x == downmovers[i].X && shp.Y + y == downmovers[i].Y)
+                {
+                    ispushed = false;
+                }
+            }
+            for (int i = 0; i < upmovers.Count; i++)
+            {
+                if (shp.X + x == upmovers[i].X && shp.Y + y == upmovers[i].Y)
                 {
                     ispushed = false;
                 }
@@ -2637,8 +2628,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        rightmovers[i].vector.X = rightmovers[i].X *((int)(30*1.3));
-                        rightmovers[i].vector.Y = rightmovers[i].Y *((int)(30*1.3));
+                        rightmovers[i].vector.X = rightmovers[i].X * ((int)(30 * 1.3));
+                        rightmovers[i].vector.Y = rightmovers[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -3251,7 +3242,7 @@ namespace Cyberbox
             }
             return ispushed;
         }
-        
+
         public Boolean pushDM(Circle player, Shape shp, int x, int y)
         {
             Boolean ispushed = true;
@@ -3358,8 +3349,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        downmovers[i].vector.X = downmovers[i].X *((int)(30*1.3));
-                        downmovers[i].vector.Y = downmovers[i].Y *((int)(30*1.3));
+                        downmovers[i].vector.X = downmovers[i].X * ((int)(30 * 1.3));
+                        downmovers[i].vector.Y = downmovers[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -3888,8 +3879,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
-                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
+                        greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
+                        greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4094,7 +4085,7 @@ namespace Cyberbox
                         if (greens[i].X > 0 && greens[i].X < 14)
                             greens[i].X += x;
                         else
-                            if(greens[i].X == 0)
+                            if (greens[i].X == 0)
                             {
                                 if (x < 0)
                                 {
@@ -4125,8 +4116,8 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        greens[i].vector.X = greens[i].X *((int)(30*1.3));
-                        greens[i].vector.Y = greens[i].Y *((int)(30*1.3));
+                        greens[i].vector.X = greens[i].X * ((int)(30 * 1.3));
+                        greens[i].vector.Y = greens[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4160,7 +4151,7 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
+                        yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4194,7 +4185,7 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
+                        blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4269,7 +4260,7 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        yellows[i].vector.Y = yellows[i].Y *((int)(30*1.3));
+                        yellows[i].vector.Y = yellows[i].Y * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4489,7 +4480,7 @@ namespace Cyberbox
                                     ispushed = false;
                                 }
                             }
-                        blues[i].vector.X = blues[i].X *((int)(30*1.3));
+                        blues[i].vector.X = blues[i].X * ((int)(30 * 1.3));
                         return ispushed;
                     }
                 }
@@ -4532,9 +4523,9 @@ namespace Cyberbox
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(background.GetTexture(), new Rectangle(0, 0, 685, 490), Color.White);
             // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
             Rectangle titleSafeRectangle = new Rectangle(18, 58, 590, 396);
             // Call our method (also defined in this blog-post)
@@ -4542,7 +4533,7 @@ namespace Cyberbox
             // Create any rectangle you want. Here we'll use the TitleSafeArea for fun.
             Rectangle exit = new Rectangle(290, 58, 39, 1);
             // Call our method (also defined in this blog-post)
-            DrawBorder(exit, 1, Color.Blue);
+            DrawBorder(exit, 1, Color.Black);
             Rectangle exitLeft = new Rectangle(289, 0, 1, 58);
             // Call our method (also defined in this blog-post)
             DrawBorder(exitLeft, 1, Color.White);
@@ -4551,19 +4542,19 @@ namespace Cyberbox
             DrawBorder(exitRight, 1, Color.White);
             for (int i = 0; i < bricks.Count; i++)
             {
-                spriteBatch.Draw(brick.GetTexture(), bricks[i].vector + new Vector2(20, 60), null, Color.Wheat, 0, Vector2.Zero, 0.08f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(brick, bricks[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < greens.Count; i++)
             {
-                spriteBatch.Draw(green.GetTexture(), greens[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(green, greens[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < blues.Count; i++)
             {
-                spriteBatch.Draw(blue.GetTexture(), blues[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(blue, blues[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < yellows.Count; i++)
             {
-                spriteBatch.Draw(yellow.GetTexture(), yellows[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(yellow, yellows[i].vector + new Vector2(20, 60), null, Color.White, 0, Vector2.Zero, 1.3f, SpriteEffects.None, 0f);
             }
             for (int i = 0; i < downmovers.Count; i++)
             {
@@ -4624,7 +4615,7 @@ namespace Cyberbox
             {
                 roomNumberIndex = roomNumberIndex - 1;
             }
-            spriteBatch.DrawString(spriteFont2, "Toggle 'F' For Fullscreen", new Vector2(21, 465), Color.White);
+            spriteBatch.DrawString(spriteFont3, "Esc - Quit", new Vector2(0, 465), Color.White);
             spriteBatch.DrawString(spriteFont3, "Room " + currentLevel + ": " + rooms[roomNumberIndex], new Vector2(250, 465), Color.White);
             spriteBatch.End();
 
